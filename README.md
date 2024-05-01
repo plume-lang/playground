@@ -1,24 +1,36 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# The Plume Playground
+
+Plume Playground is a website crafted with TailwindCSS, Next.js, Monaco, and XTerm that lets the user use Plume on the web without the need to install anything.
 
 ## Getting Started
 
-First, run the development server:
+First, you need to set up the server by installing Plume for Linux and extracting it into the `compiler` subfolder.
+
+Then you need to build both compiler and interpreter docker images by running:
+```bash
+# Specifying platform to make it work on ARM systems
+docker build server -t plume-compiler -f server/Dockerfile.compiler --platform linux/amd64
+
+docker build server -t plume-interpreter -f server/Dockerfile.interpreter --platform linux/amd64
+```
+
+Finally, install the dependencies:
+
+```bash
+npm i -f # You might add the force flag due to XTerm beta dependencies
+```
+
+And then, run:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed at [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
