@@ -36,5 +36,6 @@ yarn-error.log*
 next-env.d.ts
 
 server/files/*.json
-server/compiler
+server/compiler/bin
+server/compiler/standard
 server/tmp
