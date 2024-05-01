@@ -67,6 +67,23 @@ export const validateResponse = z.union([
   z.object({ error: z.string().min(15) })
 ]);
 
+export function saveLocalStorage(file: PlumeFile, setLocalContent: State<PlumeFile[]>) {
+  if (file.content.length !== file.size) return;
+
+  setLocalContent(files => {
+    const index = files.findIndex(f => f.id === file.id && f.name === file.name);
+
+    if (index === -1) {
+      files.unshift(file);
+      return files;
+    }
+    
+    files[index].content = file.content;
+    files[index].size = file.size;
+
+    return files;
+  });
+}
 
 export async function runFile(file: PlumeFile, content: string, term: Terminal | null) {
   if (!term) return;
@@ -85,7 +102,9 @@ export async function runFile(file: PlumeFile, content: string, term: Terminal |
     const jsonRes = await res.json();
 
     const data = validateResponse.parse(jsonRes);
-  
+
+    term.clear();
+
     if ('error' in data)
       return term.writeln(data.error);
   

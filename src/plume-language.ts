@@ -11,7 +11,7 @@ export function setupTheme(monaco: Monaco) {
     colors: {
       "editor.background": tw.colors.zinc[900],
       "editor.foreground": tw.colors.zinc[200],
-      "editor.lineHighlightBackground": tw.colors.zinc[700],
+      "editor.lineHighlightBackground": tw.colors.zinc[800],
     },
     inherit: true,
     rules: [
@@ -56,6 +56,8 @@ export function setupLanguage(monaco: Monaco) {
       { close: '}', open: '{' },
       { close: ']', open: '[' },
       { close: ')', open: '(' },
+      { close: '"', open: '"' },
+      { close: '\'', open: '\'' },
     ],
     brackets: pairs,
     colorizedBracketPairs: pairs,

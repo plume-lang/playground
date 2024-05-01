@@ -1,7 +1,7 @@
 'use client';
 
 import { useParams } from "next/navigation";
-import { MutableRefObject, useCallback, useRef } from "react";
+import { MutableRefObject, useCallback, useEffect, useRef } from "react";
 import Editor, { OnMount } from "@monaco-editor/react";
 import { editor } from "monaco-editor";
 import Image from "next/image";
@@ -11,7 +11,7 @@ import { FilePlusIcon, PlayIcon, Share1Icon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { z } from "zod";
 import { GetServerSideProps } from "next";
-import { PlumeFile, dataValidation, runFile, saveFile } from "@/file";
+import { PlumeFile, dataValidation, runFile, saveFile, saveLocalStorage } from "@/file";
 import { readFileSync } from "fs";
 import { useURL } from "@/hooks/use-url";
 import dynamic from "next/dynamic";
@@ -43,6 +43,22 @@ function EditorComponent({ plumeFile }: { plumeFile: PlumeFile }) {
     return <h1>Not found</h1>;
 
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
+
+  saveLocalStorage(plumeFile, setLocalContent);
+
+  useEffect(() => {
+    const unloadCallback = async (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+
+      const content = editorRef.current?.getValue() ?? '';
+      await saveFile(plumeFile, content, setLocalContent);
+
+      return "New file content will be automatically saved on page close or refresh";
+    };
+  
+    window.addEventListener("beforeunload", unloadCallback);
+    return () => window.removeEventListener("beforeunload", unloadCallback);
+  }, []);
 
   return <>
     <nav className="bg-zinc-900 h-16 border-b grid grid-cols-5 border-b-zinc-600">
