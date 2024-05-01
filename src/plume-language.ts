@@ -2,6 +2,9 @@ import { Monaco } from "@monaco-editor/react";
 import { tw } from "./tailwind";
 import { languages } from "monaco-editor";
 
+export const defaultPlumeCode = `// Welcome to the Plume Playground!
+println("Hello, world!")`;
+
 export function setupTheme(monaco: Monaco) {
   monaco.editor.defineTheme('plume-dark', {
     base: "vs-dark",
