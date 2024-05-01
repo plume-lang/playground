@@ -4,7 +4,7 @@ import Link from "next/link";
 import { PropsWithChildren } from "react";
 
 export function List({ children }: PropsWithChildren) {
-  return <ul className="flex flex-col gap-8 gap-y-4 mt-4 mb-16">
+  return <ul className="flex flex-col gap-8 gap-y-4 mt-4">
     {children}
   </ul>
 }

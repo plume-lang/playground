@@ -233,7 +233,7 @@ export const Xterm = ({
 			try {
 				xterm.dispose();
 			} catch (e) {
-				console.log(e);
+				console.error(e);
 			}
 			xtermRef.current = null;
 		};

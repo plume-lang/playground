@@ -1,11 +1,12 @@
 'use client'
 
 import { List, RecentFile } from "@/components/list-files";
-import { PlumeFile, dataValidation } from "@/file";
+import { PlumeFile, State, dataValidation } from "@/file";
 import Image from "next/image";
 import { useIsClient, useLocalStorage } from "@uidotdev/usehooks";
 import { uniqueNamesGenerator, starWars, adjectives } from "unique-names-generator";
 import { Dispatch, SetStateAction } from "react";
+import { NextRouter, useRouter } from "next/router";
 
 export default function Home() {
   const isClient = useIsClient();
@@ -15,7 +16,7 @@ export default function Home() {
   return <HomePage />;
 }
 
-async function createFile(setFiles: Dispatch<SetStateAction<PlumeFile[]>>) {
+async function createFile(setFiles: State<PlumeFile[]>, router: NextRouter) {
   const generated = uniqueNamesGenerator({
     dictionaries: [adjectives, starWars],
     length: 2,
@@ -36,13 +37,14 @@ async function createFile(setFiles: Dispatch<SetStateAction<PlumeFile[]>>) {
 
   const data = dataValidation.parse(await res.json());
 
-  console.log(data);
-
   setFiles(files => [data, ...files]);
+
+  router.push("/files/[slug]", `/files/${data.id}`);
 }
 
 function HomePage() {
   const [files, setFiles] = useLocalStorage<PlumeFile[]>('files', []);
+  const router = useRouter();
 
   return <>
     <header className="p-8 text-center max-w-5xl mx-auto mt-32">
@@ -68,16 +70,21 @@ function HomePage() {
         </span>
         
         <ul className="flex flex-auto items-center justify-end">
-          <button className="bg-hot-pink-400 py-2 px-6 text-lg rounded-lg font-medium text-white focus:outline-none" onClick={() => createFile(setFiles)}>
+          <button className="bg-hot-pink-400 py-2 px-6 text-lg rounded-lg font-medium text-white focus:outline-none" onClick={() => createFile(setFiles, router)}>
             Start coding
           </button>
         </ul>
       </nav>
 
       {files.length > 0
-        ? <List>
-            {files.map(file => <RecentFile key={file.id} {...file} />)}
-          </List>
+        ? <>
+            <List>
+              {files.map(file => <RecentFile key={file.id} {...file} />)}
+            </List>
+            <span className="mt-4 inline-block mb-16 text-zinc-200/50 italic cursor-pointer hover:underline" onClick={() => setFiles([])}>
+              Clear file cache
+            </span>
+          </>
         : <p className="text-white/70 mt-16 text-lg text-center">
             No files have been edited yet.
           </p>
