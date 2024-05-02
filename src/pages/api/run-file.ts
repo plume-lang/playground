@@ -20,13 +20,20 @@ export const config = {
 const compile = async (file: string): Promise<ContainerOutput> => new Promise(async (resolve) => {
   const compilerPath = path.resolve(serverPath, 'compiler', 'bin', 'plumec');
   const res = await spawn(compilerPath, [file], { cwd: path.resolve(serverPath, '..'), stdio: ['pipe', 'pipe', 'pipe']});
-
-  res.stderr.on('data', (data) => {
-    resolve({ stderr: data.toString('utf-8'), status: 1 });
+  
+  let stdout = '';
+  let stderr = '';
+  
+  res.stdout.on('data', (data) => {
+    stdout += data.toString('utf-8');
   });
 
-  res.stdout.on('data', async (data) => {
-    resolve({ stdout: data.toString('utf-8'), status: 0 });
+  res.stderr.on('data', (data) => {
+    stderr += data.toString('utf-8');
+  });
+
+  res.on('close', (status) => {
+    resolve({ stdout, stderr, status: status || 0 });
   });
 });
 
@@ -39,12 +46,19 @@ interface ContainerOutput {
 const run = async (container: string, ...args: string[]): Promise<ContainerOutput> => new Promise(async (resolve, reject) => {
   const res = await spawn('docker', ['run', '-v', './server/tmp/:/isolated/tmp', '--platform', 'linux/amd64', container, ...args]);
   
-  res.stderr.on('data', (data) => {
-    resolve({ stderr: data.toString('utf-8'), status: 1 });
+  let stdout = '';
+  let stderr = '';
+  
+  res.stdout.on('data', (data) => {
+    stdout += data.toString('utf-8');
   });
 
-  res.stdout.on('data', async (data) => {
-    resolve({ stdout: data.toString('utf-8'), status: 0 });
+  res.stderr.on('data', (data) => {
+    stderr += data.toString('utf-8');
+  });
+
+  res.on('close', (status) => {
+    resolve({ stdout, stderr, status: status || 0 });
   });
 });
 
