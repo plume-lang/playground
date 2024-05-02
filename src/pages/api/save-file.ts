@@ -35,10 +35,11 @@ export default function handler(
 
       writeFileSync(`./server/files/${id}.json`, JSON.stringify(file), 'utf-8');
       
-      res.status(200).json(file);
+      return res.status(200).json(file);
     } catch (error) {
-      res.status(400).json({ error: error as string });
+      return res.status(400).json({ error: error as string });
     }
-    
   }
+
+  return res.status(405).end();
 }

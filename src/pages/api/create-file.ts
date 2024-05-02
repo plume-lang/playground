@@ -41,10 +41,11 @@ export default function handler(
 
       writeFileSync(`./server/files/${plumeFile.id}.json`, JSON.stringify(plumeFile), 'utf-8');
       
-      res.status(200).json(plumeFile);
+      return res.status(200).json(plumeFile);
     } catch (error) {
-      res.status(400).json({ error: error as string });
+      return res.status(400).json({ error: error as string });
     }
-    
   }
+
+  return res.status(405).end();
 }
