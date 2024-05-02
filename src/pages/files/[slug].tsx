@@ -10,7 +10,7 @@ import { setupLanguage, setupTheme } from "@/plume-language";
 import { DownloadIcon, PlayIcon, Share1Icon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { z } from "zod";
-import { GetServerSideProps } from "next";
+import { GetServerSideProps, Metadata, ResolvingMetadata } from "next";
 import { PlumeFile, dataValidation, runFile, saveFile, saveLocalStorage } from "@/file";
 import { readFileSync } from "fs";
 import { useURL } from "@/hooks/use-url";
@@ -337,3 +337,13 @@ export const getServerSideProps = (async (context) => {
   return { props: { plumeFile: dataValidation.parse(plumeFile) } };
 
 }) satisfies GetServerSideProps<{ plumeFile: PlumeFile }>
+
+export async function generateMetadata(
+  { plumeFile }: { plumeFile: PlumeFile }
+): Promise<Metadata> {
+
+  return {
+    title: `Plume - ${plumeFile.name}`,
+    description: 'Write, compile and run Plume code online with just one click.',
+  };
+}

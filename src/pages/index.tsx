@@ -5,7 +5,6 @@ import { PlumeFile, State, dataValidation } from "@/file";
 import Image from "next/image";
 import { useIsClient, useLocalStorage } from "@uidotdev/usehooks";
 import { uniqueNamesGenerator, starWars, adjectives } from "unique-names-generator";
-import { Dispatch, SetStateAction } from "react";
 import { NextRouter, useRouter } from "next/router";
 
 export default function Home() {
