@@ -146,11 +146,11 @@ interface IProps {
   /**
    * A ref to the terminal instance.
    */
-  bindRef?: React.MutableRefObject<Terminal | null>;
+  bindRef?: React.MutableRefObject<{ term: Terminal, div: HTMLDivElement } | null>;
 }
 
 function useBind(
-	termRef: React.RefObject<Terminal>,
+	termRef: React.RefObject<{ term: Terminal, div: HTMLDivElement }>,
 	handler: any,
 	eventName:
 		| 'onBell'
@@ -169,7 +169,7 @@ function useBind(
 	useEffect(() => {
 		if (!termRef.current || typeof handler !== 'function') return;
 		const term = termRef.current;
-		const eventBinding = term[eventName](handler);
+		const eventBinding = term.term[eventName](handler);
 		return () => {
 			if (!eventBinding) return;
 			eventBinding.dispose();
@@ -202,7 +202,7 @@ export const Xterm = ({
   bindRef,
 }: IProps) => {
 	const divRef = useRef<HTMLDivElement | null>(null);
-	const xtermRef = useRef<Terminal | null>(null);
+	const xtermRef = useRef<{ term: Terminal, div: HTMLDivElement } | null>(null);
 
 	useEffect(() => {
 		if (!divRef.current) return;
@@ -219,10 +219,14 @@ export const Xterm = ({
 		if (customKeyEventHandler) {
 			xterm.attachCustomKeyEventHandler(customKeyEventHandler);
 		}
+    
+		xtermRef.current = {
+      term: xterm,
+      div: divRef.current,
+    };
 
-		xtermRef.current = xterm;
     if (bindRef) {
-      bindRef.current = xterm;
+      bindRef.current = xtermRef.current;
     }
 		xterm.open(divRef.current);
     
@@ -237,7 +241,7 @@ export const Xterm = ({
 			}
 			xtermRef.current = null;
 		};
-	}, [options]);
+	}, [options, addons, bindRef, customKeyEventHandler, onDispose, onMount]);
 
 	useBind(xtermRef, onBell?.bind(xtermRef), 'onBell');
 	useBind(xtermRef, onBinary?.bind(xtermRef), 'onBinary');
@@ -256,7 +260,7 @@ export const Xterm = ({
 		() => {
 			if (!xtermRef.current) return;
 			if (typeof onInit !== 'function') return;
-			onInit(xtermRef.current);
+			onInit(xtermRef.current.term);
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[xtermRef.current]

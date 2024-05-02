@@ -19,7 +19,7 @@ export function useFetch(url: string, options?: RequestInit) {
         setLoading(false);
         setError(err);
       });
-  }, [url])
+  }, [url, options])
 
   return { data, loading, error };
 }
