@@ -9,7 +9,9 @@ export const metadata: Metadata = {
 export default function Document() {
   return (
     <Html lang="en">
-      <Head />
+      <Head>
+        <link rel="shortcut icon" href="/logo-bg.svg" type="image/x-icon" />
+      </Head>
       <body className="bg-zinc-900">
         <Main />
         <NextScript />
