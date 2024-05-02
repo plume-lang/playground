@@ -7,6 +7,7 @@ export interface PlumeFile {
   size: number;
   id: string;
   content: string;
+  lastModified?: number;
 }
 
 export function prettySize(size: number): string {
@@ -20,6 +21,7 @@ export const dataValidation = z.object({
   size: z.number().min(0).max(1024 * 1024),
   id: z.string().uuid(),
   content: z.string(),
+  lastModified: z.number().positive(),
 });
 
 export type State<T> = Dispatch<SetStateAction<T>>;
@@ -52,6 +54,7 @@ export async function saveFile(file: PlumeFile, newContent: string, setLocalCont
 
         newFile.content = newContent;
         newFile.size = fileLength;
+        newFile.lastModified = Date.now();
         newFiles.unshift(newFile);
 
         return newFiles;
@@ -80,6 +83,7 @@ export function saveLocalStorage(file: PlumeFile, setLocalContent: State<PlumeFi
     
     files[index].content = file.content;
     files[index].size = file.size;
+    files[index].lastModified = file.lastModified;
 
     return files;
   });
