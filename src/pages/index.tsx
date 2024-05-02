@@ -49,6 +49,7 @@ function HomePage() {
   return <>
     <header className="p-8 text-center max-w-5xl mx-auto mt-32">
       <Image
+        priority
         src="/logo-bg.svg"
         alt="Plume logo"
         className="rounded-3xl mx-auto"

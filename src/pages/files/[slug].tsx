@@ -211,7 +211,7 @@ function EditorComponent({ plumeFile }: { plumeFile: PlumeFile }) {
   return <>
     <nav className="bg-zinc-900 h-16 border-b grid grid-cols-5 border-b-zinc-600">
       <Link href="/" className="w-16 inline-block">
-        <Image src="/logo.svg" alt="Plume logo" width={64} height={64} />
+        <Image priority src="/logo.svg" alt="Plume logo" width={64} height={64} />
       </Link>
       <span className="font-mono flex-auto text-white text-center col-span-3 self-center">
         {plumeFile.name}
