@@ -14,6 +14,16 @@ export const config = {
   maxDuration: 5,
 }
 
+const isLinux = process.platform === 'linux';
+const docker = (...args: string[]) => {
+  if (isLinux) {
+    return spawnSync('sudo', ['docker', ...args]);
+  }
+
+  return spawnSync('docker', args);
+
+}
+
 export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>,
@@ -30,7 +40,7 @@ export default function handler(
 
       writeFileSync(`./server/tmp/${id}.plm`, content, 'utf-8');
 
-      const compilRes = spawnSync('docker', ['run', '-v', './server/tmp/:/isolated/tmp', '--platform', 'linux/amd64', 'plume-compiler', `tmp/${id}.plm`], { stdio: ['inherit', 'inherit', 'pipe'] });
+      const compilRes = docker('run', '-v', './server/tmp/:/isolated/tmp', '--platform', 'linux/amd64', 'plume-compiler', `tmp/${id}.plm`);
       
       rmSync(`./server/tmp/${id}.plm`);
 
@@ -44,7 +54,7 @@ export default function handler(
         return res.status(400).json({ error: 'Compilation failed' });
       }
 
-      const execRes = spawnSync('docker', ['run', '-v', './server/tmp/:/isolated/tmp', '--platform', 'linux/amd64', 'plume-interpreter', `tmp/${id}.bin`]);
+      const execRes = docker('run', '-v', './server/tmp/:/isolated/tmp', '--platform', 'linux/amd64', 'plume-interpreter', `tmp/${id}.bin`);
 
       rmSync(bytecodeFile);
 
