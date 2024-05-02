@@ -32,7 +32,7 @@ const compile = async (file: string): Promise<ContainerOutput> => new Promise(as
 
 interface ContainerOutput {
   stdout?: string;
-  stderr?: Error;
+  stderr?: string;
   status: number;
 }
 
@@ -71,7 +71,7 @@ export default async function handler(
 
       if (compilRes.status && compilRes.status !== 0) {
         return res.status(502).json({ 
-          error: compilRes.stderr?.message || 'Compilation failed'
+          error: compilRes.stderr || 'Compilation failed'
         });
       }
 
@@ -81,7 +81,7 @@ export default async function handler(
 
       if (execRes.status && execRes.status !== 0) {
         return res.status(502).json({ 
-          error: execRes.stderr?.message || 'Execution failed'
+          error: execRes.stderr || 'Execution failed'
         });
       }
 
