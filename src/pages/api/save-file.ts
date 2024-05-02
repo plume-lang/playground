@@ -1,7 +1,5 @@
 import { PlumeFile, dataValidation } from "@/file";
-import { defaultPlumeCode } from "@/plume-language";
-import { randomUUID } from "crypto";
-import { fstatSync, statSync, writeFileSync } from "fs";
+import {  writeFileSync } from "fs";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { z } from "zod";
 

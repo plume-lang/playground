@@ -12,13 +12,14 @@ import Link from "next/link";
 import { z } from "zod";
 import { GetServerSideProps, Metadata, ResolvingMetadata } from "next";
 import { PlumeFile, dataValidation, runFile, saveFile, saveLocalStorage } from "@/file";
-import { readFileSync } from "fs";
+import { existsSync, readFileSync } from "fs";
 import { useURL } from "@/hooks/use-url";
 import dynamic from "next/dynamic";
 import { FitAddon } from "@xterm/addon-fit";
 import { CanvasAddon } from "@xterm/addon-canvas";
 import type { Terminal } from "@xterm/xterm";
 import { tw } from "@/tailwind";
+import path from "path";
 
 export default function CodeEditor({ plumeFile }: { plumeFile: PlumeFile }) {
   const isClient = useIsClient();
@@ -325,13 +326,18 @@ function RenderTerminal({ termRef, fitAddon }: { termRef: MutableRefObject<{ ter
 
 export const getServerSideProps = (async (context) => {
   const validateSlug = z.string().uuid();
+  const serverPath = process.env.SERVER_PATH || 'server';
 
   if (!context.params) return { notFound: true };
   if (!('slug' in context.params)) return { notFound: true };
 
   const slug = validateSlug.parse(context.params.slug);
 
-  const content = readFileSync(`./server/files/${slug}.json`, 'utf-8');
+  const filePath = path.resolve(serverPath, `files/${slug}.json`);
+
+  if (!existsSync(filePath)) return { notFound: true };
+
+  const content = readFileSync(filePath, 'utf-8');
   const plumeFile = JSON.parse(content);
 
   return { props: { plumeFile: dataValidation.parse(plumeFile) } };
