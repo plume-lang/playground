@@ -39,3 +39,5 @@ server/files/*.json
 server/compiler/bin
 server/compiler/standard
 server/tmp
+
+.env
