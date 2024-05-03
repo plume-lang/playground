@@ -43,7 +43,7 @@ interface ContainerOutput {
   status: number;
 }
 
-const run = async (container: string, ...args: string[]): Promise<ContainerOutput> => new Promise(async (resolve, reject) => {
+const run = async (container: string, ...args: string[]): Promise<ContainerOutput> => new Promise(async (resolve) => {
   const res = await spawn('docker', ['run', '-v', './server/tmp/:/isolated/tmp', '--platform', 'linux/amd64', container, ...args]);
   
   let stdout = '';
@@ -79,7 +79,7 @@ export default async function handler(
       const modulePath = path.resolve(serverPath, `tmp/${id}.plm`);
       writeFileSync(modulePath, content, 'utf-8');
 
-      const compilRes = await compile(modulePath);
+      const compilRes = await run('plume-compiler', `tmp/${id}.plm`);
       
       rmSync(modulePath);
 
