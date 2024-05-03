@@ -10,6 +10,8 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
+        <title>Plume Playground</title>
+        <meta name="description" content="An online playground for the Plume programming language" />
         <link rel="shortcut icon" href="/logo-bg.svg" type="image/x-icon" />
       </Head>
       <body className="bg-zinc-900">

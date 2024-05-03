@@ -20,6 +20,17 @@ import { CanvasAddon } from "@xterm/addon-canvas";
 import type { Terminal } from "@xterm/xterm";
 import { tw } from "@/tailwind";
 import path from "path";
+import Head from "next/head";
+
+export async function generateMetadata(
+  { plumeFile }: { plumeFile: PlumeFile }
+): Promise<Metadata> {
+
+  return {
+    title: `Plume - ${plumeFile.name}`,
+    description: 'Write, compile and run Plume code online with just one click.',
+  };
+}
 
 export default function CodeEditor({ plumeFile }: { plumeFile: PlumeFile }) {
   const isClient = useIsClient();
@@ -30,7 +41,13 @@ export default function CodeEditor({ plumeFile }: { plumeFile: PlumeFile }) {
   if (typeof window === 'undefined' || typeof document === 'undefined' || typeof self === 'undefined')
     return null;
 
-  return <EditorComponent plumeFile={plumeFile} />;
+  return <>
+    <Head>
+      <title>Plume - {plumeFile.name}</title>
+      <meta name="description" content="An online playground for the Plume programming language" />
+    </Head>
+    <EditorComponent plumeFile={plumeFile} />
+  </>;
 }
 
 function EditorComponent({ plumeFile }: { plumeFile: PlumeFile }) {
@@ -343,13 +360,3 @@ export const getServerSideProps = (async (context) => {
   return { props: { plumeFile: dataValidation.parse(plumeFile) } };
 
 }) satisfies GetServerSideProps<{ plumeFile: PlumeFile }>
-
-export async function generateMetadata(
-  { plumeFile }: { plumeFile: PlumeFile }
-): Promise<Metadata> {
-
-  return {
-    title: `Plume - ${plumeFile.name}`,
-    description: 'Write, compile and run Plume code online with just one click.',
-  };
-}
