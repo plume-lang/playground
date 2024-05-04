@@ -4,16 +4,16 @@ import path from "path";
 import { unlink, exists } from "node:fs/promises";
 import { CORS_HEADERS } from "#root/library/route";
 
-export namespace RouteModule {
+export namespace Compiler {
   interface CodeRequest {
     code: string;
-    fileName: string;
+    id?: string;
   }
 
   function validateBody(body: any): CodeRequest {
     const bodyValidator = z.object({
       code: z.string(),
-      fileName: z.string().min(1).endsWith('.plm'),
+      id: z.string().uuid().optional(),
     });
 
     return bodyValidator.parse(body);
@@ -47,7 +47,9 @@ export namespace RouteModule {
 
   export async function handleRequest(req: Request): Promise<Response> {
     const body = await req.json();
-    const { code, fileName } = validateBody(body);
+    const { code, id } = validateBody(body);
+
+    const fileName = id ?? `${crypto.randomUUID()}.plm`;
 
     const res = await compile(fileName, code);
     
