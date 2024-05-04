@@ -18,6 +18,7 @@ export function setupLanguage(monaco: Monaco) {
       { close: ')', open: '(' },
       { close: '"', open: '"' },
       { close: '\'', open: '\'' },
+      { close: '<', open: '>' },
     ],
     brackets: pairs,
     colorizedBracketPairs: pairs,
@@ -33,6 +34,7 @@ export function setupLanguage(monaco: Monaco) {
       { open: '{', close: '}', token: 'delimiter.curly' },
       { open: '[', close: ']', token: 'delimiter.square' },
       { open: '(', close: ')', token: 'delimiter.parenthesis' },
+      { open: '<', close: '>', token: 'delimiter.angle' },
     ],
 
     operators: [
@@ -77,7 +79,7 @@ export function setupLanguage(monaco: Monaco) {
         [/(fn)(\s+)(\w+)(\()/, ['keyword', 'white', 'function', 'delimiter.parenthesis']],
         [/(fn)(\s+)(\()/, ['keyword', 'white', 'delimiter.parenthesis']],
         [/(fn)(\s+)(\w+)/, ['keyword', 'white', 'function']],
-        
+
         [/(\w+)(\()/, ['function', 'delimiter.parenthesis']],
         
         [/\?/, 'keyword'],
