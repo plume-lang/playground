@@ -1,0 +1,11 @@
+FROM amd64/debian:12-slim
+
+WORKDIR /isolated
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
+
+COPY compiler /isolated/compiler
+
+ENV PLUME_PATH /isolated/compiler/standard/
+
+ENTRYPOINT [ "/isolated/compiler/bin/plumec" ]

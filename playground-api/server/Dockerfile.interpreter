@@ -1,0 +1,11 @@
+FROM amd64/ubuntu:22.04
+
+WORKDIR /isolated
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
+
+COPY compiler /isolated/compiler
+
+ENV PLUME_PATH /isolated/compiler/standard/
+
+ENTRYPOINT [ "/isolated/compiler/bin/plume" ]
