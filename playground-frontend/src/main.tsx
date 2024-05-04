@@ -23,6 +23,10 @@ const router = createBrowserRouter([
           {
             path: ':id',
             element: <Editor />
+          },
+          {
+            path: 'local/:id',
+            element: <Editor isLocal />
           }
         ]
       }
