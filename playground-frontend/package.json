@@ -10,16 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@radix-ui/react-slot": "^1.0.2",
+    "@monaco-editor/react": "^4.6.0",
     "@uidotdev/usehooks": "^2.4.1",
-    "class-variance-authority": "^0.7.0",
-    "clsx": "^2.1.1",
+    "ansi-to-html": "^0.7.2",
     "lucide-react": "^0.378.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.0",
-    "tailwind-merge": "^2.3.0",
-    "tailwindcss-animate": "^1.0.7",
     "vite-tsconfig-paths": "^4.3.2",
     "zod": "^3.23.6"
   },
