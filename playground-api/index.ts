@@ -2,6 +2,7 @@ import { serve } from "bun";
 import { LogLevel, log } from "#library/logger";
 import chalk from "chalk";
 import { routes } from "./routes";
+import { CORS_HEADERS } from "#library/route";
 
 // Build the API
 const server = serve({
@@ -26,7 +27,7 @@ const server = serve({
     }
 
     log(LogLevel.ERROR, `Route not found at ${pathname}`);
-    return new Response('Not found', { status: 404 });
+    return new Response('Not found', { status: 404, ...CORS_HEADERS });
   }
 });
 

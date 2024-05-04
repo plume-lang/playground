@@ -2,6 +2,7 @@ import { Docker } from "#root/library/docker";
 import { z } from "zod";
 import path from "path";
 import { unlink, exists } from "node:fs/promises";
+import { CORS_HEADERS } from "#root/library/route";
 
 export namespace RouteModule {
   interface CodeRequest {
@@ -51,16 +52,16 @@ export namespace RouteModule {
     const res = await compile(fileName, code);
     
     if (res.exitCode !== 0) {
-      return new Response(JSON.stringify(res), { status: 400 });
+      return new Response(JSON.stringify(res), { status: 400, ...CORS_HEADERS });
     }
 
     const newFileName = fileName.replace('.plm', '.bin');
     const runRes = await run(newFileName);
 
     if (runRes.exitCode !== 0) {
-      return new Response(JSON.stringify(runRes), { status: 400 });
+      return new Response(JSON.stringify(runRes), { status: 400, ...CORS_HEADERS });
     }
 
-    return new Response(runRes.output, { status: 200 });
+    return new Response(JSON.stringify({ output: runRes.output }), { status: 200, ...CORS_HEADERS });
   }
 }
