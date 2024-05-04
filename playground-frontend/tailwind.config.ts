@@ -9,7 +9,6 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Noto Sans", ...fontFamily.sans],
         mono: ["Fira Code", ...fontFamily.mono],
       },
       colors: {
