@@ -1,13 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from '#src/App.tsx';
+import App from '#root/src/app';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import '#assets/index.css';
+import Editor from './pages/editor';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    children: [
+      {
+        index: true,
+        element: <App />
+      },
+      {
+        path: 'editor',
+        children: [
+          {
+            index: true,
+            element: <Editor isEmpty={true} />
+          },
+          {
+            path: ':id',
+            element: <Editor />
+          }
+        ]
+      }
+    ]
   }
 ]);
 

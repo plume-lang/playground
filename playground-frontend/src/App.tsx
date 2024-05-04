@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function App() {
   return <main className="grid place-items-center h-full">
     <header className="text-center">
@@ -10,9 +12,9 @@ export default function App() {
       </p>
 
       <ul className="flex justify-center gap-x-4">
-        <button className="bg-hot-pink/20 text-hot-pink-200 py-2 px-6 rounded-lg font-medium tracking-wide">
+        <Link to="/editor" className="bg-hot-pink/20 text-hot-pink-200 py-2 px-6 rounded-lg font-medium tracking-wide">
           Start coding
-        </button>
+        </Link>
         <button className="bg-hot-pink/20 text-hot-pink-200 py-2 px-6 rounded-lg font-medium tracking-wide">
           Open local file
         </button>
