@@ -29,6 +29,7 @@
       "#components/*": ["./src/components/*"],
       "#hooks/*": ["./src/hooks/*"],
       "#pages/*": ["./src/pages/*"],
+      "#library/*": ["./library/*"]
     }
   },
   "include": ["src", "library"],
