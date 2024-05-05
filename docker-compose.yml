@@ -1,0 +1,27 @@
+services:
+  api:
+    platform: linux/amd64
+    build:
+      context: playground-api
+      dockerfile: Dockerfile
+    container_name: playground-api
+    env_file:
+      - playground-api/.env
+    networks:
+      - proxy-net
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  
+  frontend:
+    platform: linux/amd64
+    build:
+      context: playground-frontend
+      dockerfile: Dockerfile
+    container_name: playground-frontend
+    networks:
+      - proxy-net
+
+networks:
+  proxy-net:
+    name: proxy-network
+    external: true
