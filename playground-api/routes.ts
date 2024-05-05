@@ -1,7 +1,7 @@
 import type { Route } from "#library/route";
 import { Compiler } from "#routes/compile";
-import { FileGetter } from "./routes/get-file";
-import { FileSaver } from "./routes/save-file";
+import { FileGetter } from "#routes/get-file";
+import { FileSaver } from "#routes/save-file";
 
 export const routes: Route[] = [
   {
