@@ -24,10 +24,7 @@ export const fileValidator = z.object({
   lastModified: z.date(),
 });
 
-export const API_PORT = 6989;
-export const API_HOST = 'http://localhost';
-
-const API_URL = `${API_HOST}:${API_PORT}`;
+const API_URL = process.env.API_URL || 'http://localhost:3001';
 
 export async function execRawCode(code: string): Promise<string> {
   const res = await fetch(`${API_URL}/api/compile`, {
