@@ -1,4 +1,4 @@
-FROM oven/bun:alpine
+FROM oven/bun:latest
 
 COPY --from=docker:dind /usr/local/bin/docker /usr/local/bin/
 

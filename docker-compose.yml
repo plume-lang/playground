@@ -1,6 +1,5 @@
 services:
   api:
-    platform: linux/amd64
     build:
       context: playground-api
       dockerfile: Dockerfile
@@ -13,7 +12,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
   
   frontend:
-    platform: linux/amd64
     build:
       context: playground-frontend
       dockerfile: Dockerfile
