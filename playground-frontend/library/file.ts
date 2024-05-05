@@ -24,7 +24,7 @@ export const fileValidator = z.object({
   lastModified: z.date(),
 });
 
-const API_URL = import.meta.env.API_URL || 'http://localhost:3001';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
 export async function execRawCode(code: string): Promise<string> {
   const res = await fetch(`${API_URL}/api/compile`, {
