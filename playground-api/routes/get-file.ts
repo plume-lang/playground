@@ -16,7 +16,7 @@ export namespace FileGetter {
     const url = new URL(req.url);
     const id = validateBody(url.pathname.split('/').pop());
 
-    const jsonPath = path.resolve(Docker.serverPath, 'files', `${id}.json`);
+    const jsonPath = '/' + path.join('exchange', 'files', `${id}.json`);
     const json = await Bun.file(jsonPath);
 
     if (!await json.exists()) {

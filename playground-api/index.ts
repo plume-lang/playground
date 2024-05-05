@@ -4,6 +4,11 @@ import chalk from "chalk";
 import { routes } from "./routes";
 import { CORS_HEADERS } from "#library/route";
 
+if (!process.env.EXCHANGE_PATH) {
+  log(LogLevel.ERROR, 'Exchange path not set');
+  process.exit(1);
+}
+
 // Build the API
 const server = serve({
   port: process.env.SERVER_PORT || 3001,

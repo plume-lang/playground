@@ -28,7 +28,7 @@ export namespace FileSaver {
 
     const finalFileName = fileName ?? uniqueNamesGenerator({ dictionaries: [colors, animals], separator: ' ' }).replaceAll(/\s+/, '-');
     const finalUuid = id ?? crypto.randomUUID();
-    const jsonPath = path.resolve(Docker.serverPath, 'files', `${finalUuid}.json`);
+    const jsonPath = '/' + path.join('exchange', 'files', `${finalUuid}.json`);
 
     // Create the JSON file
     const json = JSON.stringify({ 

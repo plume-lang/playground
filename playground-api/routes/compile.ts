@@ -1,4 +1,4 @@
-import { Docker } from "#root/library/docker";
+import { Docker, promiseExec } from "#root/library/docker";
 import { z } from "zod";
 import path from "path";
 import { unlink, exists } from "node:fs/promises";
@@ -20,9 +20,10 @@ export namespace Compiler {
   }
 
   async function compile(fileName: string, code: string): Promise<Docker.Result> {
-    const tmpPath = path.resolve(Docker.serverPath, 'tmp', fileName);
+    const tmpPath = '/' + path.join('exchange', 'tmp', fileName);
 
     await Bun.write(tmpPath, code);
+
     const res = await Docker.run('plume-compiler', `tmp/${fileName}`);
     await unlink(tmpPath);
 
@@ -30,7 +31,7 @@ export namespace Compiler {
   }
 
   async function run(fileName: string): Promise<Docker.Result> {
-    const tmpPath = path.resolve(Docker.serverPath, 'tmp', fileName);
+    const tmpPath = '/' + path.join('exchange', 'tmp', fileName);
 
     if (!await exists(tmpPath)) {
       return {
@@ -39,7 +40,8 @@ export namespace Compiler {
       }
     }
 
-    const res =  await Docker.run('plume-interpreter', `tmp/${fileName}`);
+    const res = await Docker.run('plume-interpreter', `tmp/${fileName}`);
+
     await unlink(tmpPath);
 
     return res;
