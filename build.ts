@@ -15,8 +15,6 @@ if (!which('docker')) {
 const compilerName = process.env.COMPILER ?? 'plume-compiler';
 const interpreterName = process.env.INTERPRETER ?? 'plume-interpreter';
 
-const isARM = process.env.PLATFORM === 'arm64';
-const platform = isARM ? '--platform linux/amd64' : '';
 const serverPath = process.env.SERVER_PATH || path.join(path.dirname(Bun.main), 'playground-api', 'server');
 
 function createDockerfilePath(container: string): string {
@@ -24,7 +22,7 @@ function createDockerfilePath(container: string): string {
 }
 
 customLog('DOCKER', 'Building compiler image');
-const cRes = await promiseExec(`docker build ${serverPath} -t ${compilerName} -f ${createDockerfilePath('compiler')} ${platform}`);
+const cRes = await promiseExec(`docker build ${serverPath} -t ${compilerName} -f ${createDockerfilePath('compiler')}`);
 
 if (cRes.exitCode !== 0) {
   log(LogLevel.ERROR, 'Failed to build compiler image');
@@ -33,7 +31,7 @@ if (cRes.exitCode !== 0) {
 }
 
 customLog('DOCKER', 'Building interpreter image');
-const iRes = await promiseExec(`docker build ${serverPath} -t ${interpreterName} -f ${createDockerfilePath('interpreter')} ${platform}`);
+const iRes = await promiseExec(`docker build ${serverPath} -t ${interpreterName} -f ${createDockerfilePath('interpreter')}`);
 
 if (iRes.exitCode !== 0) {
   log(LogLevel.ERROR, 'Failed to build interpreter image');

@@ -34,13 +34,10 @@ export namespace Docker {
 
     // Run the container
     const tmpPath = path.resolve(serverPath, 'tmp');
-
-    const isARM = process.env.PLATFORM === 'arm64';
-    const platform = isARM ? '--platform linux/amd64' : '';
     
     const logFile = path.resolve(tmpPath, `log_${Date.now()}.log`);
 
-    const res = await promiseExec(`docker run -v ${tmpPath}:/isolated/tmp ${platform} ${containerName} ${args} &> ${logFile}`);
+    const res = await promiseExec(`docker run -v ${tmpPath}:/isolated/tmp ${containerName} ${args} &> ${logFile}`);
 
     const output = await Bun.file(logFile);
     const outputStr = await output.text();
