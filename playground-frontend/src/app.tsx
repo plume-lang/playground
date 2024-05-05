@@ -81,9 +81,9 @@ export default function App() {
         </button>
       </ul>
 
-      <ul className="max-w-xl mx-auto flex flex-col gap-y-4 mt-4">
+      <ul className="max-w-xl mx-auto flex flex-col gap-y-2 mt-8">
         {files.sort((a, b) => b.lastModified - a.lastModified).map(file => 
-          <Link to={file.isLocal ? `/editor/local/${file.id}` : `/editor/${file.id}`} key={file.id} className=" border-white/10 py-2 items-center rounded-lg grid grid-cols-4 gap-x-3">
+          <Link to={file.isLocal ? `/editor/local/${file.id}` : `/editor/${file.id}`} key={file.id} className=" border-white/10 items-center rounded-lg grid grid-cols-4 gap-x-3">
             <span className="font-mono text-white/90 text-lg text-left col-span-2">
               {file.fileName}
             </span>
