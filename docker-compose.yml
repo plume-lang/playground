@@ -15,6 +15,8 @@ services:
     build:
       context: playground-frontend
       dockerfile: Dockerfile
+    env_file:
+      - playground-api/.env
     container_name: playground-frontend
     networks:
       - proxy-net
