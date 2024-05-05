@@ -6,6 +6,8 @@ WORKDIR /playground/playground-api
 
 COPY . /playground/playground-api
 
+ENV SERVER_PORT=3001
+
 # install the dependencies
 RUN cd /playground/playground-api && bun install
 

@@ -6,7 +6,7 @@ import { CORS_HEADERS } from "#library/route";
 
 // Build the API
 const server = serve({
-  port: process.env.SERVER_PORT || 3000,
+  port: process.env.SERVER_PORT || 3001,
   hostname: process.env.SERVER_HOST || 'localhost',
   async fetch(req) {
     const { method } = req;

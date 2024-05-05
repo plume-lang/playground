@@ -5,7 +5,8 @@ services:
       dockerfile: Dockerfile
     container_name: playground-api
     env_file:
-      - playground-api/.env
+      - path: ./playground-api/.env
+        required: true
     networks:
       - proxy-net
     volumes:
@@ -16,6 +17,9 @@ services:
       context: playground-frontend
       dockerfile: Dockerfile
     container_name: playground-frontend
+    env_file:
+      - path: ./playground-frontend/.env
+        required: true
     networks:
       - proxy-net
 
