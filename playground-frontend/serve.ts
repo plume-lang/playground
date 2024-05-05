@@ -17,7 +17,7 @@ const server = serve({
 
     const distPath = path.resolve(path.dirname(Bun.main), "dist");
 
-    if (pathname === '/') {
+    if (pathname === '/' || /\/editor(\/local)?\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/.test(pathname)) {
       log(LogLevel.INFO, `Requested route at ${pathname}`);
       const index = await Bun.file(path.resolve(distPath, 'index.html'));
       const indexStr = await index.text();
@@ -59,7 +59,10 @@ const server = serve({
     }
 
     log(LogLevel.ERROR, `Route not found at ${pathname}`);
-    return new Response('Not found', { status: 404 });
+
+    const index = await Bun.file(path.resolve(distPath, 'index.html'));
+    const indexStr = await index.text();
+    return new Response(indexStr, { status: 404, headers: { 'Content-Type': 'text/html' } });
   },
 });
 

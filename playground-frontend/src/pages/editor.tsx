@@ -15,7 +15,6 @@ const paramsValidator = z.object({
 });
 
 interface EditorProps {
-  isEmpty?: boolean;
   isLocal?: boolean;
 }
 
