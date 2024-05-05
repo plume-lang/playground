@@ -15,7 +15,7 @@ if (!which('docker')) {
 const compilerName = process.env.COMPILER ?? 'plume-compiler';
 const interpreterName = process.env.INTERPRETER ?? 'plume-interpreter';
 
-const serverPath = process.env.SERVER_PATH || path.join(path.dirname(Bun.main), 'playground-api', 'server');
+const serverPath = path.join(path.dirname(Bun.main), 'playground-api', 'server');
 
 function createDockerfilePath(container: string): string {
   return path.resolve(serverPath, `Dockerfile.${container}`);
