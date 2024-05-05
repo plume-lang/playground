@@ -4,7 +4,7 @@ import chalk from "chalk";
 import path from "path";
 
 const server = serve({
-  port: process.env.SERVER_PORT || 3000,
+  port: process.env.SERVER_PORT || 3002,
   hostname: process.env.SERVER_HOST || 'localhost',
   async fetch(request) {
     const { method } = request;
