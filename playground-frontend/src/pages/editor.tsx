@@ -50,7 +50,7 @@ export default function Editor({ isLocal = false }: EditorProps) {
     }
 
     if (isLocal) {
-      setPlumeFile(files.find(f => f.id === id) ?? null);
+      setPlumeFile(files.find(f => f.id === id && f.isLocal) ?? null);
       setLoading(false);
     } else {
       getFile(id)
@@ -61,7 +61,6 @@ export default function Editor({ isLocal = false }: EditorProps) {
 
   if (!loading) {
     if (!plumeFile) {
-      console.log()
       return <Error
         error="File not found"
         description="The file you're trying to access could not be found. It may have been deleted or the URL is incorrect."
