@@ -3,7 +3,7 @@ import path from 'path';
 import { exec } from 'node:child_process';
 import { unlink } from 'node:fs/promises';
 
-async function promiseExec(cmd: string) {
+export async function promiseExec(cmd: string) {
   interface Result {
     stdout: string;
     stderr: string;

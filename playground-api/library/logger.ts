@@ -4,6 +4,7 @@ export enum LogLevel {
   INFO = 'INFO',
   WARN = 'WARN',
   ERROR = 'ERROR',
+  SUCCESS = 'SUCCESS',
 }
 
 export function prettyLogLevel(level: LogLevel): string {
@@ -14,6 +15,8 @@ export function prettyLogLevel(level: LogLevel): string {
       return chalk.yellow(level);
     case LogLevel.ERROR:
       return chalk.red(level);
+    case LogLevel.SUCCESS:
+      return chalk.green(level);
   }
 }
 
