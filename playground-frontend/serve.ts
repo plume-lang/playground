@@ -1,5 +1,6 @@
-import { LogLevel, customLog, log } from "../playground-api/library/logger";
+import { LogLevel, customLog, log } from "#library/logger";
 import { serve } from "bun";
+import chalk from "chalk";
 import path from "path";
 
 const server = serve({
@@ -62,4 +63,4 @@ const server = serve({
   },
 });
 
-log(LogLevel.SUCCESS, `Started server at ${server.hostname}:${server.port}`);
+console.log(`${chalk.green('START')}: Running at http://${server.hostname}:${server.port}`);
