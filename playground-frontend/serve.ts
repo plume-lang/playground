@@ -10,7 +10,7 @@ const server = serve({
     const { method } = request;
     const { pathname } = new URL(request.url);
 
-    if (method !== 'GET') {
+    if (method !== 'HEAD' && method !== 'GET') {
       log(LogLevel.ERROR, `Method ${method} not allowed at ${pathname}`);
       return new Response('Method not allowed', { status: 405 });
     }
