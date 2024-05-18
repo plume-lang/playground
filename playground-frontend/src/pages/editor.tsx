@@ -234,15 +234,15 @@ function CodeEditor({ plumeFile }: { plumeFile: PlumeFile }) {
   }, []);
 
   return <main className="" ref={containerRef}>
-    <nav className="h-16 grid grid-cols-5">
+    <nav className="h-16 grid md:grid-cols-3 max-md:grid-cols-5">
       <Link to="/" className="col-span-1 items-center flex">
         <img src="/logo.svg" className="w-16 h-16 rounded-full ml-2" alt="Plume logo" />
-        <h1 className="text-xl font-bold text-white/90 flex items-center">
+        <h1 className="text-xl font-bold text-white/90 flex items-center max-md:hidden">
           Plume Playground
         </h1>
       </Link>
 
-      <div className="col-span-3 justify-self-center self-center">
+      <div className="col-span-1 max-md:col-span-3 justify-self-center self-center">
         <span className="text-white/70 font-mono">
           {plumeFile?.fileName ?? 'untitled.plm'}
         </span>

@@ -57,7 +57,7 @@ export default function App() {
     navigate(`/editor/local/${uuid}`);
   }, []);
 
-  return <main className="grid place-items-center h-full">
+  return <main className="grid place-items-center h-full px-8">
     <input type='file' id='file' onChange={handleFileUpload} ref={inputFile} className="hidden" />
     <header className="text-center">
       <img src="/logo-bg.svg" className="w-24 rounded-3xl mx-auto mb-8" alt="" />
@@ -68,14 +68,14 @@ export default function App() {
         Learn and discover the Plume programming language. Explore its features and capabilities. Share your code with others and learn from the community.
       </p>
 
-      <ul className="flex justify-center gap-x-4 max-w-md mx-auto">
+      <ul className="flex justify-center max-md:flex-col gap-4 max-w-md mx-auto">
         <button
-          className="bg-hot-pink/20 text-hot-pink-200 py-2 px-6 rounded-lg font-medium tracking-wide w-1/2" 
+          className="bg-hot-pink/20 text-hot-pink-200 py-2 px-6 rounded-lg font-medium tracking-wide w-1/2 max-md:w-full" 
           onClick={() => createFile(setFiles, navigate)}>
           Start coding
         </button>
         <button 
-          className="bg-hot-pink/20 text-hot-pink-200 py-2 px-6 rounded-lg font-medium tracking-wide w-1/2" 
+          className="bg-hot-pink/20 text-hot-pink-200 py-2 px-6 rounded-lg font-medium tracking-wide w-1/2 max-md:w-full" 
           onClick={() => inputFile.current?.click()}>
           Open local file
         </button>
@@ -83,11 +83,11 @@ export default function App() {
 
       <ul className="max-w-xl mx-auto flex flex-col gap-y-2 mt-8">
         {files.sort((a, b) => b.lastModified - a.lastModified).map(file => 
-          <Link to={file.isLocal ? `/editor/local/${file.id}` : `/editor/${file.id}`} key={file.id} className=" border-white/10 items-center rounded-lg grid grid-cols-4 gap-x-3">
-            <span className="font-mono text-white/90 text-lg text-left col-span-2">
+          <Link to={file.isLocal ? `/editor/local/${file.id}` : `/editor/${file.id}`} key={file.id} className=" border-white/10 items-center rounded-lg grid max-md:grid-cols-2 md:grid-cols-4 gap-3">
+            <span className="font-mono text-white/90 max-md:text-sm md:text-lg text-left md:col-span-2">
               {file.fileName}
             </span>
-            <span className="bg-mustard/20 justify-self-end text-mustard-200 font-medium px-3 rounded-full w-min">
+            <span className="bg-mustard/20 justify-self-end text-mustard-200 font-medium px-3 rounded-full w-min max-md:hidden">
               {file.isLocal && 'Local'}
             </span>
             <span className="flex-auto justify-end text-right text-sm text-white/60">
