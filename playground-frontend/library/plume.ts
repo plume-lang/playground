@@ -18,7 +18,7 @@ export function setupLanguage(monaco: Monaco) {
       { close: ')', open: '(' },
       { close: '"', open: '"' },
       { close: '\'', open: '\'' },
-      { close: '<', open: '>' },
+      { open: '<', close: '>' },
     ],
     brackets: pairs,
     colorizedBracketPairs: pairs,
@@ -59,6 +59,8 @@ export function setupLanguage(monaco: Monaco) {
       , "infixl"
       , "infixr"
       , "mut"
+      , "interface"
+      , "extends"
     ],
 
     typeKeywords: [
@@ -72,19 +74,21 @@ export function setupLanguage(monaco: Monaco) {
 
     escapes: /\\(?:[abfnrtv\\"']|x[0-9A-Fa-f]{1,4}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})/,
     symbols: /[=><!~?:&|+\-*\/\^%]+/,
+    variable: /[a-zA-Z_\$][a-zA-Z0-9_\$]*/,
+    interpolation: /\$[a-zA-Z_][a-zA-Z0-9_]*/,
 
     tokenizer: {
       root: [
         // Function definition
-        [/(fn)(\s+)(\w+)(\()/, ['keyword', 'white', 'function', 'delimiter.parenthesis']],
+        [/(fn)(\s+)(@variable)(\()/, ['keyword', 'white', 'function', 'delimiter.parenthesis']],
         [/(fn)(\s+)(\()/, ['keyword', 'white', 'delimiter.parenthesis']],
-        [/(fn)(\s+)(\w+)/, ['keyword', 'white', 'function']],
+        [/(fn)(\s+)(@variable)/, ['keyword', 'white', 'function']],
 
-        [/(\w+)(\()/, ['function', 'delimiter.parenthesis']],
+        [/(@variable)(\()/, ['function', 'delimiter.parenthesis']],
         
         [/\?/, 'keyword'],
 
-        [/[a-z_$][\w$]*/, {
+        [/@variable/, {
           cases: {
             '@typeKeywords': 'interface',
             '@keywords': 'keyword',
@@ -118,7 +122,8 @@ export function setupLanguage(monaco: Monaco) {
       ],
 
       string: [
-        [/[^\\"]+/, 'string'],
+        [/[^\\"$]+/, 'string'],
+        [/@interpolation/, 'variable'],
         [/@escapes/, 'string.escape'],
         [/\\./, 'string.escape.invalid'],
         [/"/, { token: 'string.quote', bracket: '@close', next: '@pop' }]

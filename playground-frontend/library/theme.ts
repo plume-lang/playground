@@ -24,6 +24,10 @@ export function setupTheme(monaco: Monaco) {
         foreground: tw.colors.green[400],
       },
       {
+        token: 'string.escape',
+        foreground: tw.colors.blue[300],
+      },
+      {
         token: 'comment',
         foreground: tw.colors.zinc[500],
       },
