@@ -23,7 +23,7 @@ export namespace Compiler {
     const tmpPath = '/' + path.join('exchange', 'tmp', fileName);
 
     await Bun.write(tmpPath, code);
-
+    
     const res = await Docker.run('plume-compiler', `tmp/${fileName}`);
     await unlink(tmpPath);
 
@@ -59,7 +59,7 @@ export namespace Compiler {
       return new Response(JSON.stringify(res), { status: 400, ...CORS_HEADERS });
     }
 
-    const newFileName = fileName.replace('.plm', '.bin');
+    const newFileName = fileName.replace('.plm', '.js');
     const runRes = await run(newFileName);
 
     if (runRes.exitCode !== 0) {
