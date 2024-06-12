@@ -61,6 +61,7 @@ export function setupLanguage(monaco: Monaco) {
       , "mut"
       , "interface"
       , "extends"
+      , "await"
     ],
 
     typeKeywords: [
@@ -85,7 +86,7 @@ export function setupLanguage(monaco: Monaco) {
         [/(fn)(\s+)(@variable)/, ['keyword', 'white', 'function']],
 
         [/(@variable)(\()/, ['function', 'delimiter.parenthesis']],
-        
+
         [/\?/, 'keyword'],
 
         [/@variable/, {
