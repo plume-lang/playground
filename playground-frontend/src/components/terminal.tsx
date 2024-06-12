@@ -27,7 +27,8 @@ function setupANSI() {
       tw.colors.pink["400"],
       tw.colors.cyan["400"],
       tw.colors.white,
-    ]
+    ],
+    escapeXML: true
   });
 
   return convert;
