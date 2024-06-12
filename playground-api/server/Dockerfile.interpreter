@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM node:latest
 
 WORKDIR /isolated
 ENV LANG C.UTF-8
@@ -8,6 +8,4 @@ COPY compiler /isolated/compiler
 
 ENV PLUME_PATH /isolated/compiler/standard/
 
-RUN ["chmod", "+x", "/isolated/compiler/bin/plume"]
-
-ENTRYPOINT [ "/isolated/compiler/bin/plume" ]
+ENTRYPOINT [ "node" ]
