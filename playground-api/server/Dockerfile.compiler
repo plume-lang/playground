@@ -10,4 +10,4 @@ ENV PLUME_PATH /isolated/compiler/standard/
 
 RUN ["chmod", "+x", "/isolated/compiler/bin/plumec"]
 
-ENTRYPOINT [ "/isolated/compiler/bin/plumec" ]
+ENTRYPOINT [ "/isolated/compiler/bin/plumec", "-e", "js" ]
