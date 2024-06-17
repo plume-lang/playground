@@ -204,6 +204,18 @@ function CodeEditor({ plumeFile }: { plumeFile: PlumeFile }) {
     secondHalfEle.style.removeProperty('user-select');
     secondHalfEle.style.removeProperty('pointer-events');
   };
+
+  function downloadFile() {
+    if (!plumeFile) return;
+
+    const blob = new Blob([plumeFile.code], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+
+    a.href = url;
+    a.download = plumeFile.fileName;
+    a.click();
+  }
   
 
   useEffect(() => {
@@ -249,8 +261,8 @@ function CodeEditor({ plumeFile }: { plumeFile: PlumeFile }) {
       </div>
 
       <ul className="col-span-1 self-center justify-self-end mr-8 flex gap-6">
-        <SaveIcon className="w-6 h-6 text-white/70" />
-        <ShareIcon onClick={() => uploadFile(plumeFile, navigate, setFiles)} className="w-6 h-6 text-white/70" />
+        <SaveIcon onClick={downloadFile} className="w-6 h-6 text-white/70 cursor-pointer" />
+        <ShareIcon onClick={() => uploadFile(plumeFile, navigate, setFiles)} className="w-6 h-6 text-white/70 cursor-pointer" />
       </ul>
     </nav>
 
