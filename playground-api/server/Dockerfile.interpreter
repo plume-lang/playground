@@ -1,4 +1,4 @@
-FROM node:latest
+FROM debian:12-slim
 
 WORKDIR /isolated
 ENV LANG C.UTF-8
@@ -8,4 +8,6 @@ COPY compiler /isolated/compiler
 
 ENV PLUME_PATH /isolated/compiler/standard/
 
-ENTRYPOINT [ "node" ]
+RUN ["chmod", "+x", "/isolated/compiler/bin/plume"]
+
+ENTRYPOINT [ "/isolated/compiler/bin/plume" ]

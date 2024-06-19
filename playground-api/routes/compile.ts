@@ -59,7 +59,7 @@ export namespace Compiler {
       return new Response(JSON.stringify(res), { status: 400, ...CORS_HEADERS });
     }
 
-    const newFileName = fileName.replace('.plm', '.js');
+    const newFileName = fileName.replace('.plm', '.bin');
     const runRes = await run(newFileName);
 
     if (runRes.exitCode !== 0) {
